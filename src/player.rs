@@ -1,6 +1,11 @@
 use std::time::Duration;
 
-use crate::{NUM_COLS, NUM_ROWS, frame::{Drawable, Frame}, shot::Shot, invaders::Invaders};
+use crate::{
+    frame::{Drawable, Frame},
+    invaders::Invaders,
+    shot::Shot,
+    MAX_SHOTS, NUM_COLS, NUM_ROWS,
+};
 
 pub struct Player {
     x: usize,
@@ -9,11 +14,11 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new() -> Self  {
+    pub fn new() -> Self {
         Self {
-            x : NUM_COLS / 2,
-            y : NUM_ROWS - 1,
-            shots: Vec::new(), 
+            x: NUM_COLS / 2,
+            y: NUM_ROWS - 1,
+            shots: Vec::new(),
         }
     }
 
@@ -23,13 +28,13 @@ impl Player {
         }
     }
 
-    pub fn move_right(&mut self){
+    pub fn move_right(&mut self) {
         if self.x < NUM_COLS - 1 {
             self.x += 1;
         }
     }
-    pub fn shoot(&mut self) -> bool{
-        if self.shots.len() < 2 {
+    pub fn shoot(&mut self) -> bool {
+        if self.shots.len() < MAX_SHOTS {
             self.shots.push(Shot::new(self.x, self.y - 1));
             true
         } else {
@@ -37,7 +42,7 @@ impl Player {
         }
     }
 
-    pub fn update(&mut self, delta: Duration){
+    pub fn update(&mut self, delta: Duration) {
         for shot in self.shots.iter_mut() {
             shot.update(delta);
         }
@@ -48,7 +53,7 @@ impl Player {
         let mut hit_something = false;
         for shot in self.shots.iter_mut() {
             if !shot.exploding {
-                if invaders.kill_invader_at(shot.x, shot.y){
+                if invaders.kill_invader_at(shot.x, shot.y) {
                     hit_something = true;
                     shot.explode();
                 }
@@ -59,7 +64,7 @@ impl Player {
 }
 
 impl Drawable for Player {
-    fn draw(&self, frame: &mut Frame){
+    fn draw(&self, frame: &mut Frame) {
         frame[self.x][self.y] = "A";
         for shot in self.shots.iter() {
             shot.draw(frame);

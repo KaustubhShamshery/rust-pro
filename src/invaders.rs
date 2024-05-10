@@ -4,7 +4,7 @@ use rusty_time::timer::Timer;
 
 use crate::{
     frame::{Drawable, Frame},
-    NUM_COLS, NUM_ROWS,
+    NUM_COLS, NUM_ROWS, SPARSE_VAL,
 };
 
 pub struct Invader {
@@ -23,7 +23,13 @@ impl Invaders {
         let mut army = Vec::new();
         for x in 0..NUM_COLS {
             for y in 0..NUM_ROWS {
-                if x > 1 && x < NUM_COLS - 2 && y > 0 && y < 9 && y % 2 == 0 && x % 2 == 0 {
+                if x > 1
+                    && x < NUM_COLS - 2
+                    && y > 0
+                    && y < 9
+                    && y % SPARSE_VAL == 0
+                    && x % SPARSE_VAL == 0
+                {
                     army.push(Invader { x, y });
                 }
             }

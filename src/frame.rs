@@ -7,7 +7,7 @@ pub fn new_frame() -> Frame {
 
     for _ in 0..NUM_COLS {
         let mut col = Vec::with_capacity(NUM_ROWS);
-        for _ in 0..NUM_ROWS{
+        for _ in 0..NUM_ROWS {
             col.push(" ");
         }
         cols.push(col);
@@ -17,5 +17,5 @@ pub fn new_frame() -> Frame {
 }
 
 pub trait Drawable {
-    fn draw(&self,frame: &mut Frame);
+    fn draw(&self, frame: &mut Frame);
 }
